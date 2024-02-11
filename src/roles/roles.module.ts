@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { RolesController } from './roles.controller';
-import { JwtService } from '@nestjs/jwt';
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {Role} from "./entities/role.entity";
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Role])],
   controllers: [RolesController],
-  providers: [JwtService, RolesService],
+  providers: [RolesService],
 })
 export class RolesModule {}

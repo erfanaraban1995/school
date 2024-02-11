@@ -1,53 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { DatabaseService } from '../database/database.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import {InjectRepository} from "@nestjs/typeorm";
+import {User} from "./entities/user.entity";
+import {Repository} from "typeorm";
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly databaseService: DatabaseService) {}
+
+  constructor(@InjectRepository(User) private userRepository: Repository<User>) {
+  }
   async create(createUserDto: CreateUserDto) {
-    return this.databaseService.users.create({
-      data: createUserDto,
-    });
+    return this.userRepository.save(createUserDto)
   }
 
   async findAll() {
-    return this.databaseService.users.findMany();
+    return this.userRepository.find()
   }
 
   async findOne(id: number) {
-    return this.databaseService.users.findUnique({
-      where: {
-        id,
-      },
-    });
+    return this.userRepository.findOneBy({ id });
   }
 
   async findByNationalId(nationalId: string) {
-    console.log(nationalId);
-    return this.databaseService.users.findUnique({
-      where: {
-        nationalId,
-      },
-    });
+    return this.userRepository.findOneBy({ nationalId });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    return this.databaseService.users.update({
-      where: {
-        id,
-      },
-      data: updateUserDto,
-    });
+    return this.userRepository.update({id}, updateUserDto)
   }
 
   async remove(id: number) {
-    return this.databaseService.users.delete({
-      where: {
-        id,
-      },
-    });
+    return this.userRepository.delete(id);
   }
 }

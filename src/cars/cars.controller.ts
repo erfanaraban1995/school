@@ -12,7 +12,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
+import {SkipAuth} from "../decorators/skipAuth";
+
 @ApiTags('Cars')
+@SkipAuth()
 @Controller('cars')
 export class CarsController {
   constructor(private readonly carsService: CarsService) {}

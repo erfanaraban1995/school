@@ -14,8 +14,10 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { ValidationPipe } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
+import {SkipAuth} from "../decorators/skipAuth";
 
 @ApiTags('Roles')
+@SkipAuth()
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
@@ -25,7 +27,6 @@ export class RolesController {
     return this.rolesService.create(createRoleDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.rolesService.findAll();

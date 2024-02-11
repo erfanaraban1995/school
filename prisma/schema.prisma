@@ -1,15 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
-// prisma/schema.prisma
 datasource db {
-  provider  = "postgresql"
+  provider  = "mysql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model Users {
@@ -17,14 +12,14 @@ model Users {
   firstName  String?
   lastName   String?
   nationalId String   @unique
-  password String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   active     Boolean  @default(true)
   roleId     Int
-  role       Roles    @relation(fields: [roleId], references: [id])
   carId      Int?
-  car        Cars?     @relation(fields: [carId], references: [id])
+  password   String
+  car        Cars?    @relation(fields: [carId], references: [id])
+  role       Roles    @relation(fields: [roleId], references: [id])
 }
 
 model Roles {
