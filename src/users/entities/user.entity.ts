@@ -1,9 +1,9 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinTable, ManyToMany,
+  Entity, JoinColumn, JoinTable, ManyToMany,
   ManyToOne,
-  OneToMany,
+  OneToMany, OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm";
@@ -55,6 +55,7 @@ export class User {
     nullable: false
   })
   password: string;
+
 
   @ManyToOne(() => Car, (car) => car.user)
   car: Car

@@ -15,7 +15,12 @@ export class UsersService {
   }
 
   async findAll() {
-    return this.userRepository.find()
+    return this.userRepository.find({
+      relations: {
+        car: true,
+        role: true
+      }
+    })
   }
 
   async findOne(id: number) {

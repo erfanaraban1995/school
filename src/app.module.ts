@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import {TypeOrmModule} from "@nestjs/typeorm";
+import { PermissionsModule } from './permissions/permissions.module';
 import entities from "../entities";
 @Module({
   imports: [UsersModule, RolesModule, CarsModule, AuthModule, TypeOrmModule.forRoot({
@@ -21,7 +22,7 @@ import entities from "../entities";
     database: 'school',
     entities,
     synchronize: true
-  })],
+  }), PermissionsModule],
   controllers: [AppController],
   providers: [
     JwtService,

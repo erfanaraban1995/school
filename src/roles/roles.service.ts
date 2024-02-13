@@ -16,7 +16,11 @@ export class RolesService {
   }
 
   async findAll() {
-    return this.roleRepository.find()
+    return this.roleRepository.find({
+      relations: {
+        user: true
+      }
+    })
   }
 
   async findOne(id: number) {

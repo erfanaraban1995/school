@@ -1,4 +1,4 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "../../users/entities/user.entity";
 
 @Entity({name: 'cars'})
@@ -19,7 +19,7 @@ export class Car {
   })
   active: boolean;
 
-  @OneToMany(() => User, (user) => user.id)
-  user: User
+  @OneToMany(() => User, (user) => user.car)
+  user: User[]
 
 }

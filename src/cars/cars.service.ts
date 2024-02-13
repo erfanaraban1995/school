@@ -17,7 +17,11 @@ export class CarsService {
   }
 
   findAll() {
-    return this.carRepository.find()
+    return this.carRepository.find({
+      relations: {
+        user: true
+      }
+    })
   }
 
   findOne(id: number) {
