@@ -58,6 +58,9 @@ export class User {
 
 
   @ManyToOne(() => Car, (car) => car.user)
+  @JoinColumn({
+    name: 'carId'
+  })
   car: Car
 
   @ManyToMany(() => Role, (role) => role.user)

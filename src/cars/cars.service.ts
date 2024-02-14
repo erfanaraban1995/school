@@ -4,6 +4,7 @@ import { UpdateCarDto } from './dto/update-car.dto';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Car} from "./entities/car.entity";
 import {Repository} from "typeorm";
+import {FilterCarDto} from "./dto/filter-car-dto-ts";
 
 @Injectable()
 export class CarsService {
@@ -16,12 +17,12 @@ export class CarsService {
     return this.carRepository.save(createCarDto)
   }
 
-  findAll() {
-    return this.carRepository.find({
-      relations: {
-        user: true
-      }
-    })
+  findAll(filter: FilterCarDto) {
+    const {name, active} = filter
+    const queryBuilder = this.carRepository.createQueryBuilder('cars');
+    name && queryBuilder.andWhere('cars.name=:name', { name });
+    'active' in filter && queryBuilder.andWhere('cars.active=:active', { active });
+    return queryBuilder.getMany()
   }
 
   findOne(id: number) {

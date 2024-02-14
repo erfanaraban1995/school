@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, Query,
 } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -13,6 +13,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
 import {SkipAuth} from "../decorators/skipAuth";
+import {FilterCarDto} from "./dto/filter-car-dto-ts";
 
 @ApiTags('Cars')
 @SkipAuth()
@@ -26,8 +27,8 @@ export class CarsController {
   }
 
   @Get()
-  findAll() {
-    return this.carsService.findAll();
+  findAll(@Query() query: FilterCarDto) {
+    return this.carsService.findAll(query);
   }
 
   @Get(':id')
